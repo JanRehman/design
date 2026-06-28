@@ -7,16 +7,25 @@
 <meta name="description" content="Haugenstua Bil Service AS — ditt lokale bilverksted på Grorud. Service, EU-kontroll, bilelektro, dekk, bremser og diagnostikk. 4.4 stjerner på Google.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /*
+    Design system (via ui-ux-pro-max skill, --design-system "automotive service local business"):
+    Palette: Automotive/Car Dealership (slate + action red), adapted to dark mode.
+    Typography: "Modern Professional" pairing — Poppins (heading) / Open Sans (body).
+    Icons: custom inline SVG stroke set (no emoji), 1.5px stroke, 24px grid, consistent corner radius.
+  */
   :root{
-    --color-primary:#1A1A2E;
-    --color-primary-light:#242444;
-    --color-accent:#E8B84B;
-    --color-accent-dark:#c99a35;
-    --color-text:#F5F5F5;
-    --color-text-muted:#b9b9c6;
-    --color-border:rgba(245,245,245,0.12);
+    --color-bg:#0B1220;
+    --color-surface:#16213B;
+    --color-surface-2:#1E293B;
+    --color-text:#F8FAFC;
+    --color-text-muted:#94A3B8;
+    --color-border:rgba(248,250,252,0.10);
+
+    --color-accent:#E11D2E;
+    --color-accent-hover:#C8152A;
+    --color-accent-soft:rgba(225,29,46,0.12);
 
     --space-xs:0.5rem;
     --space-sm:1rem;
@@ -26,26 +35,33 @@
     --space-2xl:6rem;
 
     --max-width:1200px;
-    --font-base: 'Inter', sans-serif;
+    --font-heading:'Poppins', sans-serif;
+    --font-body:'Open Sans', sans-serif;
+    --ease:cubic-bezier(.16,1,.3,1);
+    --radius:10px;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
-
   html{scroll-behavior:smooth;}
 
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *, *::before, *::after{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
   body{
-    font-family:var(--font-base);
-    background:var(--color-primary);
+    font-family:var(--font-body);
+    background:var(--color-bg);
     color:var(--color-text);
-    line-height:1.6;
+    line-height:1.65;
+    font-size:16px;
     -webkit-font-smoothing:antialiased;
   }
 
-  img,svg{display:block;max-width:100%;}
-
+  img,svg{display:block;}
   a{color:inherit;text-decoration:none;}
-
   ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;}
 
   .container{
     width:100%;
@@ -56,7 +72,7 @@
 
   section{padding:var(--space-2xl) 0;}
 
-  h1,h2,h3{font-weight:800;letter-spacing:-0.02em;}
+  h1,h2,h3{font-family:var(--font-heading);font-weight:700;letter-spacing:-0.01em;}
 
   h2.section-title{
     font-size:clamp(1.8rem,4vw,2.6rem);
@@ -66,7 +82,22 @@
 
   .accent{color:var(--color-accent);}
 
-  button{font-family:inherit;cursor:pointer;}
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:3px solid var(--color-accent);
+    outline-offset:2px;
+  }
+
+  /* Icon set */
+  .icon{
+    width:24px;height:24px;
+    stroke:currentColor;
+    stroke-width:1.6;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    flex-shrink:0;
+  }
+  .icon-lg{width:28px;height:28px;}
 
   /* Buttons */
   .btn{
@@ -74,23 +105,26 @@
     align-items:center;
     justify-content:center;
     gap:0.5rem;
+    min-height:48px;
     padding:0.9rem 1.8rem;
     border:2px solid transparent;
+    border-radius:var(--radius);
+    font-family:var(--font-heading);
     font-weight:600;
     font-size:1rem;
-    transition:transform 0.15s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    cursor:pointer;
+    transition:transform 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
   }
-  .btn:focus-visible{outline:3px solid var(--color-accent);outline-offset:3px;}
 
   .btn-primary{
     background:var(--color-accent);
-    color:var(--color-primary);
+    color:#fff;
   }
-  .btn-primary:hover{background:var(--color-accent-dark);transform:translateY(-2px);}
+  .btn-primary:hover{background:var(--color-accent-hover);transform:translateY(-2px);}
 
   .btn-outline{
     background:transparent;
-    border-color:var(--color-text);
+    border-color:var(--color-border);
     color:var(--color-text);
   }
   .btn-outline:hover{border-color:var(--color-accent);color:var(--color-accent);transform:translateY(-2px);}
@@ -100,7 +134,7 @@
     position:fixed;
     top:0;left:0;right:0;
     z-index:1000;
-    background:rgba(26,26,46,0.92);
+    background:rgba(11,18,32,0.92);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--color-border);
   }
@@ -115,59 +149,36 @@
   }
 
   .logo{
-    font-weight:800;
-    font-size:1.2rem;
-  }
-  .logo span{color:var(--color-accent);}
-
-  nav ul{
+    font-family:var(--font-heading);
+    font-weight:700;
+    font-size:1.15rem;
     display:flex;
-    gap:var(--space-lg);
+    align-items:center;
+    gap:0.5rem;
   }
+  .logo .icon{color:var(--color-accent);}
 
-  nav a{
-    font-weight:500;
-    font-size:0.95rem;
-    position:relative;
-    padding:0.25rem 0;
-  }
-  nav a:hover, nav a:focus-visible{color:var(--color-accent);}
-
-  .nav-cta{display:none;}
+  nav ul{display:flex;gap:var(--space-lg);}
+  nav a{font-weight:500;font-size:0.95rem;padding:0.25rem 0;color:var(--color-text-muted);transition:color 0.2s var(--ease);}
+  nav a:hover{color:var(--color-text);}
 
   .hamburger{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-    background:none;
-    border:none;
-    padding:0.5rem;
+    display:flex;flex-direction:column;gap:5px;
+    background:none;border:none;padding:0.6rem;
+    min-width:44px;min-height:44px;
+    align-items:center;justify-content:center;
   }
-  .hamburger span{
-    width:26px;height:2px;background:var(--color-text);transition:transform 0.2s ease, opacity 0.2s ease;
-  }
+  .hamburger span{width:24px;height:2px;background:var(--color-text);transition:transform 0.2s var(--ease), opacity 0.2s var(--ease);}
   .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
   .hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
-  .mobile-nav{
-    display:none;
-    flex-direction:column;
-    gap:var(--space-sm);
-    padding:var(--space-md);
-    background:var(--color-primary-light);
-    border-top:1px solid var(--color-border);
-  }
+  .mobile-nav{display:none;flex-direction:column;gap:var(--space-sm);padding:var(--space-md);background:var(--color-surface);border-top:1px solid var(--color-border);}
   .mobile-nav.open{display:flex;}
-  .mobile-nav a{font-weight:600;font-size:1.05rem;}
+  .mobile-nav a{font-weight:600;font-size:1.05rem;display:block;padding:0.5rem 0;}
 
-  @media (min-width:880px){
-    .hamburger{display:none;}
-    nav{display:block;}
-  }
-  @media (max-width:879px){
-    nav{display:none;}
-  }
+  @media (min-width:880px){ .hamburger{display:none;} }
+  @media (max-width:879px){ nav{display:none;} }
 
   /* Hero */
   .hero{
@@ -176,319 +187,160 @@
     align-items:center;
     padding-top:6rem;
     background:
-      radial-gradient(circle at 80% 20%, rgba(232,184,75,0.12), transparent 45%),
-      linear-gradient(180deg,#15152a 0%, var(--color-primary) 100%);
+      radial-gradient(circle at 85% 15%, rgba(225,29,46,0.14), transparent 45%),
+      linear-gradient(180deg,#0E172A 0%, var(--color-bg) 100%);
     position:relative;
     overflow:hidden;
   }
 
-  .hero::before{
-    content:"";
-    position:absolute;
-    right:-10%;
-    top:50%;
-    transform:translateY(-50%);
-    width:600px;
-    height:600px;
-    border:2px solid rgba(232,184,75,0.15);
-    border-radius:50%;
-  }
-
-  .hero-content{
-    max-width:680px;
-    position:relative;
-    z-index:1;
-  }
+  .hero-content{max-width:680px;position:relative;z-index:1;}
 
   .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-    background:rgba(232,184,75,0.1);
-    border:1px solid rgba(232,184,75,0.35);
-    color:var(--color-accent);
+    display:inline-flex;align-items:center;gap:0.5rem;
+    background:var(--color-accent-soft);
+    border:1px solid rgba(225,29,46,0.35);
+    color:#FF8A93;
     padding:0.5rem 1rem;
-    font-size:0.9rem;
-    font-weight:600;
+    border-radius:999px;
+    font-size:0.9rem;font-weight:600;
     margin-bottom:var(--space-md);
   }
+  .badge .icon{width:18px;height:18px;color:#FFB020;}
 
-  .hero h1{
-    font-size:clamp(2.2rem,5.5vw,3.6rem);
-    margin-bottom:var(--space-md);
-  }
+  .hero h1{font-size:clamp(2.2rem,5.5vw,3.6rem);margin-bottom:var(--space-md);}
+  .hero p{font-size:1.15rem;color:var(--color-text-muted);margin-bottom:var(--space-lg);max-width:520px;}
+  .hero-ctas{display:flex;gap:var(--space-sm);flex-wrap:wrap;}
 
-  .hero p{
-    font-size:1.15rem;
-    color:var(--color-text-muted);
-    margin-bottom:var(--space-lg);
-    max-width:520px;
-  }
-
-  .hero-ctas{
-    display:flex;
-    gap:var(--space-sm);
-    flex-wrap:wrap;
-  }
-
-  /* Fade-in animation */
-  .fade-in{
-    opacity:0;
-    transform:translateY(24px);
-    transition:opacity 0.7s ease, transform 0.7s ease;
-  }
-  .fade-in.visible{
-    opacity:1;
-    transform:translateY(0);
-  }
+  /* Fade-in */
+  .fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s var(--ease), transform 0.6s var(--ease);}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
 
   /* Services */
-  .services-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:var(--space-md);
-  }
-  @media (min-width:768px){
-    .services-grid{grid-template-columns:repeat(3,1fr);}
-  }
+  .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-md);}
+  @media (min-width:768px){ .services-grid{grid-template-columns:repeat(3,1fr);} }
 
   .service-card{
-    background:var(--color-primary-light);
+    background:var(--color-surface);
     border:1px solid var(--color-border);
+    border-radius:var(--radius);
     padding:var(--space-lg) var(--space-md);
-    transition:transform 0.2s ease, border-color 0.2s ease;
+    transition:transform 0.25s var(--ease), border-color 0.25s var(--ease);
   }
   .service-card:hover{transform:translateY(-4px);border-color:var(--color-accent);}
 
   .service-icon{
-    width:48px;height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(232,184,75,0.12);
+    width:48px;height:48px;border-radius:var(--radius);
+    display:flex;align-items:center;justify-content:center;
+    background:var(--color-accent-soft);
     color:var(--color-accent);
     margin-bottom:var(--space-sm);
-    font-size:1.4rem;
   }
 
-  .service-card h3{
-    font-size:1.15rem;
-    margin-bottom:0.4rem;
-  }
-
-  .service-card p{
-    color:var(--color-text-muted);
-    font-size:0.95rem;
-  }
+  .service-card h3{font-size:1.1rem;margin-bottom:0.4rem;}
+  .service-card p{color:var(--color-text-muted);font-size:0.95rem;}
 
   /* About */
-  .about-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:var(--space-xl);
-    align-items:center;
-  }
-  @media (min-width:880px){
-    .about-grid{grid-template-columns:1.1fr 0.9fr;}
-  }
+  .about-grid{display:grid;grid-template-columns:1fr;gap:var(--space-xl);align-items:center;}
+  @media (min-width:880px){ .about-grid{grid-template-columns:1.1fr 0.9fr;} }
 
-  .about-text p{
-    color:var(--color-text-muted);
-    font-size:1.05rem;
-  }
+  .about-text p{color:var(--color-text-muted);font-size:1.05rem;}
 
-  .stat-block{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:1px;
-    background:var(--color-border);
-    border:1px solid var(--color-border);
-  }
-
-  .stat-item{
-    background:var(--color-primary-light);
-    padding:var(--space-lg) var(--space-sm);
-    text-align:center;
-  }
-
-  .stat-item .stat-value{
-    font-size:1.6rem;
-    font-weight:800;
-    color:var(--color-accent);
-    display:block;
-    margin-bottom:0.25rem;
-  }
-
-  .stat-item .stat-label{
-    font-size:0.85rem;
-    color:var(--color-text-muted);
-  }
+  .stat-block{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--color-border);border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;}
+  .stat-item{background:var(--color-surface);padding:var(--space-lg) var(--space-sm);text-align:center;}
+  .stat-item .stat-value{font-size:1.6rem;font-weight:700;font-family:var(--font-heading);color:var(--color-accent);display:block;margin-bottom:0.25rem;}
+  .stat-item .stat-label{font-size:0.85rem;color:var(--color-text-muted);}
 
   /* Reviews */
-  .reviews-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:var(--space-md);
-    margin-bottom:var(--space-lg);
-  }
-  @media (min-width:768px){
-    .reviews-grid{grid-template-columns:repeat(3,1fr);}
-  }
+  .reviews-grid{display:grid;grid-template-columns:1fr;gap:var(--space-md);margin-bottom:var(--space-lg);}
+  @media (min-width:768px){ .reviews-grid{grid-template-columns:repeat(3,1fr);} }
 
-  .review-card{
-    background:var(--color-primary-light);
-    border:1px solid var(--color-border);
-    padding:var(--space-md);
-  }
-
-  .stars{color:var(--color-accent);font-size:1rem;margin-bottom:0.5rem;letter-spacing:2px;}
-
-  .review-card p.review-text{
-    color:var(--color-text-muted);
-    font-size:0.95rem;
-    margin-bottom:var(--space-sm);
-  }
-
+  .review-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:var(--space-md);}
+  .stars{display:flex;gap:2px;color:#FFB020;margin-bottom:0.5rem;}
+  .stars .icon{width:16px;height:16px;fill:currentColor;stroke:none;}
+  .review-card p.review-text{color:var(--color-text-muted);font-size:0.95rem;margin-bottom:var(--space-sm);}
   .review-author{font-weight:600;font-size:0.9rem;}
-  .review-placeholder-tag{
-    display:inline-block;
-    margin-top:0.5rem;
-    font-size:0.7rem;
-    color:var(--color-text-muted);
-    border:1px dashed var(--color-border);
-    padding:0.15rem 0.5rem;
-  }
+  .review-placeholder-tag{display:inline-block;margin-top:0.5rem;font-size:0.7rem;color:var(--color-text-muted);border:1px dashed var(--color-border);padding:0.15rem 0.5rem;border-radius:4px;}
 
   .reviews-cta{text-align:center;}
 
   /* Contact */
-  .contact-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:var(--space-xl);
-  }
-  @media (min-width:880px){
-    .contact-grid{grid-template-columns:1.1fr 0.9fr;}
-  }
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:var(--space-xl);}
+  @media (min-width:880px){ .contact-grid{grid-template-columns:1.1fr 0.9fr;} }
 
-  form{
-    display:flex;
-    flex-direction:column;
-    gap:var(--space-sm);
-  }
-
+  form{display:flex;flex-direction:column;gap:var(--space-sm);}
   .form-group{display:flex;flex-direction:column;gap:0.4rem;}
-
   label{font-size:0.9rem;font-weight:600;}
+  label .req{color:var(--color-accent);}
 
   input, select, textarea{
-    background:var(--color-primary-light);
+    background:var(--color-surface);
     border:1px solid var(--color-border);
+    border-radius:var(--radius);
     color:var(--color-text);
     padding:0.8rem 1rem;
-    font-family:inherit;
+    min-height:48px;
+    font-family:var(--font-body);
     font-size:1rem;
   }
-
-  input:focus, select:focus, textarea:focus{
-    outline:none;
-    border-color:var(--color-accent);
-  }
-
+  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--color-accent);}
   textarea{resize:vertical;min-height:110px;}
 
-  .error-message{
-    color:#ff8080;
-    font-size:0.85rem;
-    min-height:1.1rem;
-  }
+  .error-message{color:#FF8A93;font-size:0.85rem;min-height:1.1rem;}
 
   .form-status{
-    font-size:0.95rem;
-    padding:0.8rem 1rem;
-    border:1px solid var(--color-accent);
-    color:var(--color-accent);
-    display:none;
+    font-size:0.95rem;padding:0.8rem 1rem;border-radius:var(--radius);
+    border:1px solid var(--color-accent);color:#FF8A93;display:none;
   }
   .form-status.visible{display:block;}
 
-  .contact-info-block{
-    display:flex;
-    flex-direction:column;
-    gap:var(--space-md);
-  }
-
-  .info-row{
-    display:flex;
-    align-items:flex-start;
-    gap:var(--space-sm);
-  }
-
+  .contact-info-block{display:flex;flex-direction:column;gap:var(--space-md);}
+  .info-row{display:flex;align-items:flex-start;gap:var(--space-sm);}
   .info-icon{
-    width:40px;height:40px;
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(232,184,75,0.12);
-    color:var(--color-accent);
+    width:40px;height:40px;flex-shrink:0;border-radius:var(--radius);
+    display:flex;align-items:center;justify-content:center;
+    background:var(--color-accent-soft);color:var(--color-accent);
   }
 
-  .map-frame{
-    border:1px solid var(--color-border);
-    width:100%;
-    height:260px;
-  }
+  .map-frame{border:1px solid var(--color-border);border-radius:var(--radius);width:100%;height:260px;}
 
   /* Footer */
-  footer{
-    background:#11111f;
-    border-top:1px solid var(--color-border);
-    padding:var(--space-xl) 0 var(--space-md);
-  }
-
-  .footer-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:var(--space-lg);
-    text-align:center;
-    margin-bottom:var(--space-lg);
-  }
-  @media (min-width:768px){
-    .footer-grid{grid-template-columns:repeat(3,1fr);text-align:left;}
-  }
-
-  .footer-grid .footer-logo{font-size:1.2rem;font-weight:800;}
-  .footer-grid .footer-logo span{color:var(--color-accent);}
-
+  footer{background:#080D17;border-top:1px solid var(--color-border);padding:var(--space-xl) 0 var(--space-md);}
+  .footer-grid{display:grid;grid-template-columns:1fr;gap:var(--space-lg);text-align:center;margin-bottom:var(--space-lg);}
+  @media (min-width:768px){ .footer-grid{grid-template-columns:repeat(3,1fr);text-align:left;} }
+  .footer-grid .footer-logo{font-family:var(--font-heading);font-size:1.15rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;}
+  .footer-grid .footer-logo .icon{color:var(--color-accent);}
   .footer-links{display:flex;flex-direction:column;gap:0.5rem;}
+  .footer-links a{color:var(--color-text-muted);}
   .footer-links a:hover{color:var(--color-accent);}
-
   .footer-contact{display:flex;flex-direction:column;gap:0.5rem;color:var(--color-text-muted);font-size:0.95rem;}
+  .footer-bottom{text-align:center;font-size:0.85rem;color:var(--color-text-muted);border-top:1px solid var(--color-border);padding-top:var(--space-md);}
 
-  .footer-bottom{
-    text-align:center;
-    font-size:0.85rem;
-    color:var(--color-text-muted);
-    border-top:1px solid var(--color-border);
-    padding-top:var(--space-md);
-  }
-
-  .visually-hidden{
-    position:absolute;
-    width:1px;height:1px;
-    overflow:hidden;
-    clip:rect(0,0,0,0);
-  }
-
-  ::selection{background:var(--color-accent);color:var(--color-primary);}
+  ::selection{background:var(--color-accent);color:#fff;}
 </style>
 </head>
 <body>
 
+<!-- Reusable inline SVG icon symbols (Lucide-style, stroke-based, no emoji) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="icon-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 1 0-5.66 5.66l-6 6a1 1 0 0 0 1.42 1.42l6-6a4 4 0 0 0 5.66-5.66l-2.83-2.83-2.83 2.83L13.3 4.2l2.83 2.83Z"/></symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 4 8 8 9 4-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="icon-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></symbol>
+    <symbol id="icon-tire" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></symbol>
+    <symbol id="icon-brake-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 6v3M18 12h-3M12 18v-3M6 12h3"/></symbol>
+    <symbol id="icon-diagnostic" viewBox="0 0 24 24"><path d="M3 12h4l2-7 4 14 2-7h6"/></symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24"><path d="M12 2.5l2.95 6.46 7.05.78-5.4 4.86 1.55 6.9L12 18.1l-6.15 3.4 1.55-6.9-5.4-4.86 7.05-.78L12 2.5Z"/></symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2C9.7 21 3 14.3 3 6a2 2 0 0 1 2-2Z"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+    <symbol id="icon-car" viewBox="0 0 24 24"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1a2 2 0 1 1-4 0H7a2 2 0 1 1-4 0H2a1 1 0 0 1-1-1v-3Z"/></symbol>
+  </defs>
+</svg>
+
 <header>
   <div class="nav-wrap">
-    <a href="#" class="logo">Haugenstua <span>Bil Service</span></a>
+    <a href="#" class="logo"><svg class="icon"><use href="#icon-car"/></svg>Haugenstua Bil Service</a>
     <nav aria-label="Hovedmeny">
       <ul>
         <li><a href="#tjenester">Tjenester</a></li>
@@ -514,7 +366,7 @@
   <!-- Hero -->
   <section class="hero" id="hero">
     <div class="container hero-content">
-      <span class="badge">⭐ 4.4 / 5 — 97 Google-anmeldelser</span>
+      <span class="badge"><svg class="icon"><use href="#icon-star"/></svg> 4.4 / 5 — 97 Google-anmeldelser</span>
       <h1>Ditt lokale bilverksted på <span class="accent">Grorud</span></h1>
       <p>Profesjonell service, ærlige priser og over 97 fornøyde kunder på Google.</p>
       <div class="hero-ctas">
@@ -530,32 +382,32 @@
       <h2 class="section-title fade-in">Våre tjenester</h2>
       <div class="services-grid">
         <div class="service-card fade-in">
-          <div class="service-icon">🔧</div>
+          <div class="service-icon"><svg class="icon icon-lg"><use href="#icon-wrench"/></svg></div>
           <h3>Service &amp; vedlikehold</h3>
           <p>Periodisk service etter fabrikkens spesifikasjoner, uansett bilmerke.</p>
         </div>
         <div class="service-card fade-in">
-          <div class="service-icon">✅</div>
+          <div class="service-icon"><svg class="icon icon-lg"><use href="#icon-shield-check"/></svg></div>
           <h3>EU-kontroll</h3>
           <p>Godkjent kontrollstasjon med rask og grundig gjennomgang av bilen.</p>
         </div>
         <div class="service-card fade-in">
-          <div class="service-icon">⚡</div>
+          <div class="service-icon"><svg class="icon icon-lg"><use href="#icon-bolt"/></svg></div>
           <h3>Bilelektro</h3>
           <p>Feilsøking og reparasjon av elektriske systemer og komponenter.</p>
         </div>
         <div class="service-card fade-in">
-          <div class="service-icon">🛞</div>
+          <div class="service-icon"><svg class="icon icon-lg"><use href="#icon-tire"/></svg></div>
           <h3>Dekk og felger</h3>
           <p>Dekkskift, hjulskift, lagring og balansering for sommer og vinter.</p>
         </div>
         <div class="service-card fade-in">
-          <div class="service-icon">🛑</div>
+          <div class="service-icon"><svg class="icon icon-lg"><use href="#icon-brake-disc"/></svg></div>
           <h3>Bremser og understell</h3>
           <p>Sjekk og reparasjon av bremser, fjæring og understell for din sikkerhet.</p>
         </div>
         <div class="service-card fade-in">
-          <div class="service-icon">🩺</div>
+          <div class="service-icon"><svg class="icon icon-lg"><use href="#icon-diagnostic"/></svg></div>
           <h3>Feilsøking og diagnostikk</h3>
           <p>Avansert diagnoseutstyr som raskt finner kilden til problemet.</p>
         </div>
@@ -572,22 +424,10 @@
       </div>
       <div class="fade-in">
         <div class="stat-block">
-          <div class="stat-item">
-            <span class="stat-value">2016</span>
-            <span class="stat-label">Etablert</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">97+</span>
-            <span class="stat-label">Google-anmeldelser</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">4.4 ⭐</span>
-            <span class="stat-label">Snittkarakter</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">Alle</span>
-            <span class="stat-label">Bilmerker</span>
-          </div>
+          <div class="stat-item"><span class="stat-value">2016</span><span class="stat-label">Etablert</span></div>
+          <div class="stat-item"><span class="stat-value">97+</span><span class="stat-label">Google-anmeldelser</span></div>
+          <div class="stat-item"><span class="stat-value">4.4</span><span class="stat-label">Snittkarakter</span></div>
+          <div class="stat-item"><span class="stat-value">Alle</span><span class="stat-label">Bilmerker</span></div>
         </div>
       </div>
     </div>
@@ -600,19 +440,25 @@
       <!-- Replace placeholder reviews with real Google Places API data -->
       <div class="reviews-grid">
         <div class="review-card fade-in">
-          <div class="stars" aria-label="5 av 5 stjerner">★★★★★</div>
+          <div class="stars" aria-label="5 av 5 stjerner">
+            <svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg>
+          </div>
           <p class="review-text">"Veldig fornøyd med servicen. Ærlige og raske, fikk bilen tilbake samme dag."</p>
           <div class="review-author">Kristian Haugen</div>
           <span class="review-placeholder-tag">Eksempeldata</span>
         </div>
         <div class="review-card fade-in">
-          <div class="stars" aria-label="5 av 5 stjerner">★★★★★</div>
+          <div class="stars" aria-label="5 av 5 stjerner">
+            <svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg>
+          </div>
           <p class="review-text">"Profesjonelt verksted med god kommunikasjon. Anbefaler Haugenstua Bil Service til alle."</p>
           <div class="review-author">Mariam Said</div>
           <span class="review-placeholder-tag">Eksempeldata</span>
         </div>
         <div class="review-card fade-in">
-          <div class="stars" aria-label="5 av 5 stjerner">★★★★★</div>
+          <div class="stars" aria-label="5 av 5 stjerner">
+            <svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg><svg class="icon"><use href="#icon-star"/></svg>
+          </div>
           <p class="review-text">"Tok seg tid til å forklare hva som var feil og hva det kostet. Ingen overraskelser på fakturaen."</p>
           <div class="review-author">Lars Eriksen</div>
           <span class="review-placeholder-tag">Eksempeldata</span>
@@ -631,27 +477,27 @@
         <h2 class="section-title" style="text-align:left;">Bestill time</h2>
         <form id="bookingForm" novalidate>
           <div class="form-group">
-            <label for="navn">Navn</label>
+            <label for="navn">Navn <span class="req">*</span></label>
             <input type="text" id="navn" name="navn" required autocomplete="name">
             <span class="error-message" id="error-navn"></span>
           </div>
           <div class="form-group">
-            <label for="telefon">Telefon</label>
+            <label for="telefon">Telefon <span class="req">*</span></label>
             <input type="tel" id="telefon" name="telefon" required autocomplete="tel">
             <span class="error-message" id="error-telefon"></span>
           </div>
           <div class="form-group">
-            <label for="epost">E-post</label>
+            <label for="epost">E-post <span class="req">*</span></label>
             <input type="email" id="epost" name="epost" required autocomplete="email">
             <span class="error-message" id="error-epost"></span>
           </div>
           <div class="form-group">
-            <label for="bilmodell">Bilmerke og modell</label>
+            <label for="bilmodell">Bilmerke og modell <span class="req">*</span></label>
             <input type="text" id="bilmodell" name="bilmodell" placeholder="f.eks. Volkswagen Golf 2018" required>
             <span class="error-message" id="error-bilmodell"></span>
           </div>
           <div class="form-group">
-            <label for="tjeneste">Ønsket tjeneste</label>
+            <label for="tjeneste">Ønsket tjeneste <span class="req">*</span></label>
             <select id="tjeneste" name="tjeneste" required>
               <option value="" disabled selected>Velg en tjeneste</option>
               <option value="Service og vedlikehold">Service og vedlikehold</option>
@@ -664,7 +510,7 @@
             <span class="error-message" id="error-tjeneste"></span>
           </div>
           <div class="form-group">
-            <label for="beskrivelse">Beskrivelse av problem</label>
+            <label for="beskrivelse">Beskrivelse av problem <span class="req">*</span></label>
             <textarea id="beskrivelse" name="beskrivelse" required></textarea>
             <span class="error-message" id="error-beskrivelse"></span>
           </div>
@@ -675,32 +521,20 @@
 
       <div class="fade-in contact-info-block">
         <div class="info-row">
-          <div class="info-icon" aria-hidden="true">📍</div>
-          <div>
-            <strong>Adresse</strong><br>
-            Haavard Martinsens vei 9, 0978 Oslo
-          </div>
+          <div class="info-icon" aria-hidden="true"><svg class="icon"><use href="#icon-pin"/></svg></div>
+          <div><strong>Adresse</strong><br>Haavard Martinsens vei 9, 0978 Oslo</div>
         </div>
         <div class="info-row">
-          <div class="info-icon" aria-hidden="true">📞</div>
-          <div>
-            <strong>Telefon</strong><br>
-            <a href="tel:+4700000000">+47 00 00 00 00</a>
-          </div>
+          <div class="info-icon" aria-hidden="true"><svg class="icon"><use href="#icon-phone"/></svg></div>
+          <div><strong>Telefon</strong><br><a href="tel:+4700000000">+47 00 00 00 00</a></div>
         </div>
         <div class="info-row">
-          <div class="info-icon" aria-hidden="true">✉️</div>
-          <div>
-            <strong>E-post</strong><br>
-            <a href="mailto:post@haugenstuabilservice.no">post@haugenstuabilservice.no</a>
-          </div>
+          <div class="info-icon" aria-hidden="true"><svg class="icon"><use href="#icon-mail"/></svg></div>
+          <div><strong>E-post</strong><br><a href="mailto:post@haugenstuabilservice.no">post@haugenstuabilservice.no</a></div>
         </div>
         <div class="info-row">
-          <div class="info-icon" aria-hidden="true">👤</div>
-          <div>
-            <strong>Daglig leder</strong><br>
-            Sidrah Masoud
-          </div>
+          <div class="info-icon" aria-hidden="true"><svg class="icon"><use href="#icon-user"/></svg></div>
+          <div><strong>Daglig leder</strong><br>Sidrah Masoud</div>
         </div>
         <iframe class="map-frame" title="Kart over Haugenstua Bil Service AS" loading="lazy"
           src="https://www.google.com/maps?q=Haavard+Martinsens+vei+9,+0978+Oslo&output=embed"
@@ -715,7 +549,7 @@
 <footer>
   <div class="container footer-grid">
     <div>
-      <div class="footer-logo">Haugenstua <span>Bil Service</span></div>
+      <div class="footer-logo"><svg class="icon"><use href="#icon-car"/></svg>Haugenstua Bil Service</div>
       <p style="color:var(--color-text-muted);font-size:0.9rem;margin-top:0.5rem;">Haavard Martinsens vei 9<br>0978 Oslo</p>
     </div>
     <div class="footer-links">
@@ -730,13 +564,10 @@
       <span>Daglig leder: Sidrah Masoud</span>
     </div>
   </div>
-  <div class="footer-bottom">
-    © 2025 Haugenstua Bil Service AS — Nettside laget av [ditt byrånavn]
-  </div>
+  <div class="footer-bottom">© 2025 Haugenstua Bil Service AS — Nettside laget av [ditt byrånavn]</div>
 </footer>
 
 <script>
-  // Mobile menu toggle
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const mobileNav = document.getElementById('mobileNav');
 
@@ -752,7 +583,6 @@
     });
   });
 
-  // Scroll-triggered fade-in animations
   const fadeEls = document.querySelectorAll('.fade-in');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -762,10 +592,8 @@
       }
     });
   }, { threshold: 0.15 });
-
   fadeEls.forEach(el => observer.observe(el));
 
-  // Form validation and submission
   const form = document.getElementById('bookingForm');
   const formStatus = document.getElementById('formStatus');
 
@@ -786,12 +614,10 @@
 
   function validateField(field, value) {
     if (field === 'epost') {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailPattern.test(value.trim());
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
     }
     if (field === 'telefon') {
-      const phonePattern = /^[0-9+\s]{8,}$/;
-      return phonePattern.test(value.trim());
+      return /^[0-9+\s]{8,}$/.test(value.trim());
     }
     return value.trim().length > 0;
   }
@@ -805,7 +631,7 @@
     const data = {};
 
     Object.keys(errorMessages).forEach(field => {
-      const input = document.getElementById(field === 'tjeneste' ? 'tjeneste' : field);
+      const input = document.getElementById(field);
       const value = input.value;
       data[field] = value;
       if (!validateField(field, value)) {
@@ -814,12 +640,8 @@
       }
     });
 
-    if (!isValid) {
-      formStatus.textContent = '';
-      return;
-    }
+    if (!isValid) return;
 
-    // Placeholder submission endpoint
     console.log('Bestilling sendt:', data);
 
     formStatus.textContent = 'Takk! Forespørselen din er sendt. Vi tar kontakt så snart som mulig.';
